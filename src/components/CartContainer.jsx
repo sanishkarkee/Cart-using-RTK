@@ -1,9 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CartItem from './CartItem';
+import { clearCart } from '../features/cart/cartSlice';
 
 const CartContainer = () => {
   const { cartItems, total, amount } = useSelector((store) => store.cart);
+
+  const dispatch = useDispatch();
+
+  const clearCartHandler = () => {
+    dispatch(clearCart());
+  };
 
   if (amount < 1) {
     return (
@@ -39,7 +46,9 @@ const CartContainer = () => {
           </h4>
         </div>
 
-        <div className='btn clear-btn'>Clear cart</div>
+        <div className='btn clear-btn' onClick={() => clearCartHandler()}>
+          Clear cart
+        </div>
       </footer>
     </section>
   );

@@ -5,6 +5,7 @@ import { store } from './store';
 
 import './index.css';
 import App from './App';
+import { ToastContainer } from 'react-toastify';
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -13,6 +14,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
+      <ToastContainer theme='dark' />
     </Provider>
   </React.StrictMode>
 );
