@@ -1,7 +1,7 @@
 import React from 'react';
 import { TbChevronCompactDown, TbChevronCompactUp } from 'react-icons/tb';
 import { useDispatch } from 'react-redux';
-import { removeItem } from '../features/cart/cartSlice';
+import { decrease, increase, removeItem } from '../features/cart/cartSlice';
 
 const CartItem = (props) => {
   const { id, title, price, img, amount } = props;
@@ -10,6 +10,14 @@ const CartItem = (props) => {
 
   const removeSingleItem = (id, title) => {
     dispatch(removeItem({ itemId: id, itemTitle: title }));
+  };
+
+  const increaseQuantity = (itemId) => {
+    dispatch(increase(itemId));
+  };
+
+  const decreaseQuantity = (itemId) => {
+    dispatch(decrease(itemId));
   };
 
   return (
@@ -30,13 +38,13 @@ const CartItem = (props) => {
       </button>
 
       <div>
-        <button className='amount-btn'>
+        <button className='amount-btn' onClick={() => increaseQuantity(id)}>
           <TbChevronCompactUp />
         </button>
 
         <p className='amount'>{amount}</p>
 
-        <button className='amount-btn'>
+        <button className='amount-btn' onClick={() => decreaseQuantity(id)}>
           <TbChevronCompactDown />
         </button>
       </div>

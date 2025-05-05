@@ -40,10 +40,38 @@ const cartSlice = createSlice({
 
       toast.success(`${itemTitle} removed`);
     },
+
+    increase: (state, action) => {
+      const itemId = action.payload;
+
+      const cartItem = state.cartItems.find(
+        (individualCartItem) => individualCartItem.id === itemId
+      );
+
+      if (cartItem.amount < 10) {
+        cartItem.amount = cartItem.amount + 1;
+      } else {
+        toast.error('No more than 10 allowed');
+      }
+    },
+
+    decrease: (state, action) => {
+      const itemId = action.payload;
+
+      const cartItem = state.cartItems.find(
+        (individualCartItem) => individualCartItem.id === itemId
+      );
+
+      if (cartItem.amount > 0) {
+        cartItem.amount = cartItem.amount - 1;
+      } else {
+        toast.error('Item cannot be empty');
+      }
+    },
   },
 });
 
 // console.log(cartSlice);
-export const { clearCart, removeItem } = cartSlice.actions;
+export const { clearCart, removeItem, increase, decrease } = cartSlice.actions;
 
 export default cartSlice.reducer;
