@@ -62,16 +62,35 @@ const cartSlice = createSlice({
         (individualCartItem) => individualCartItem.id === itemId
       );
 
-      if (cartItem.amount > 0) {
+      if (cartItem.amount > 1) {
         cartItem.amount = cartItem.amount - 1;
       } else {
-        toast.error('Item cannot be empty');
+        //if the amount is 0 removing from the cart
+        state.cartItems = state.cartItems.filter(
+          (individualArrayItem) => individualArrayItem.id !== itemId
+        );
+        toast.error(`${cartItem.title} removed`);
       }
+    },
+
+    // For showing total and amount
+    calculateTotals: (state) => {
+      let amount = 0;
+      let total = 0;
+
+      state.cartItems.forEach((allCartItems) => {
+        amount = amount + allCartItems.amount;
+        total = total + allCartItems.price * allCartItems.amount;
+      });
+
+      state.amount = amount;
+      state.total = Math.round(total);
     },
   },
 });
 
 // console.log(cartSlice);
-export const { clearCart, removeItem, increase, decrease } = cartSlice.actions;
+export const { clearCart, removeItem, increase, decrease, calculateTotals } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
