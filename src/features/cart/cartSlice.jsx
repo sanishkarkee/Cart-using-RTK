@@ -84,7 +84,7 @@ const cartSlice = createSlice({
       });
 
       state.amount = amount;
-      state.total = Math.round(total);
+      state.total = total.toFixed(2);
     },
   },
 });
