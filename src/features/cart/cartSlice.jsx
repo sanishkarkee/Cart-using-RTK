@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import cartItems from '../../cartItems';
 import { toast } from 'react-toastify';
+import { openModal } from '../modal/modalSlice';
+import { useDispatch } from 'react-redux';
 
 const initialState = {
   cartItems: cartItems, //individual cart items
@@ -25,6 +27,7 @@ const cartSlice = createSlice({
        state value hunxa so must be careful while returning
       */
       toast.success('Cart cleared');
+
       return {
         cartItems: [],
       };
