@@ -7,14 +7,16 @@ import { useDispatch } from 'react-redux';
 const initialState = {
   cartItems: cartItems, //individual cart items
   amount: 1, // no of cart items
-  total: 0, // total of all prices
+  total: 0, // total of all prices 
   isLoading: true,
 };
 
 //Setting up API url using CreateAsyncThunk
 export const getCartItems = createAsyncThunk('cart/getCartItems', async () => {
   try {
-    const res = await fetch('https://www.course-api.com/react-tours-project');
+    const res = await fetch(
+      'https://www.course-api.com/react-useReducer-cart-project'
+    );
     const data = await res.json();
     return data;
   } catch (error) {
