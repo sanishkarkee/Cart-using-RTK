@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import cartItems from '../../cartItems';
 import { toast } from 'react-toastify';
 import { openModal } from '../modal/modalSlice';
@@ -7,9 +7,22 @@ import { useDispatch } from 'react-redux';
 const initialState = {
   cartItems: cartItems, //individual cart items
   amount: 1, // no of cart items
-  total: 0, // total of all prices
+  total: 0, // total of all prices 
   isLoading: true,
 };
+
+//Setting up API url using CreateAsyncThunk
+export const getCartItems = createAsyncThunk('cart/getCartItems', async () => {
+  try {
+    const res = await fetch(
+      'https://www.course-api.com/react-useReducer-cart-project'
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log('Erro encountered', error.message);
+  }
+});
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -89,6 +102,20 @@ const cartSlice = createSlice({
       state.amount = amount;
       state.total = total.toFixed(2);
     },
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(getCartItems.pending, (state) => {
+      state.isLoading = true;
+    });
+    // API bata aako bhayeko data PAYLOAD through bata FUllFILLED ma aauxa
+    builder.addCase(getCartItems.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.cartItems = action.payload;
+    });
+    builder.addCase(getCartItems.rejected, (state, action) => {
+      state.isLoading = false;
+    });
   },
 });
 
