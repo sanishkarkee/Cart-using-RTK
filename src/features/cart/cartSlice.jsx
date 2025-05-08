@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 const initialState = {
   cartItems: cartItems, //individual cart items
   amount: 1, // no of cart items
-  total: 0, // total of all prices 
+  total: 0, // total of all prices
   isLoading: true,
 };
 
@@ -110,6 +110,7 @@ const cartSlice = createSlice({
     });
     // API bata aako bhayeko data PAYLOAD through bata FUllFILLED ma aauxa
     builder.addCase(getCartItems.fulfilled, (state, action) => {
+      console.log(action);
       state.isLoading = false;
       state.cartItems = action.payload;
     });
