@@ -5,7 +5,7 @@ import { openModal } from '../modal/modalSlice';
 import { useDispatch } from 'react-redux';
 
 const initialState = {
-  cartItems: cartItems, //individual cart items
+  cartItems: [], //individual cart items
   amount: 1, // no of cart items
   total: 0, // total of all prices
   isLoading: true,
